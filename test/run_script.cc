@@ -1,4 +1,5 @@
 #include "napi.h"
+#include "test_helper.h"
 
 using namespace Napi;
 
@@ -6,18 +7,18 @@ namespace {
 
 Value RunPlainString(const CallbackInfo& info) {
   Env env = info.Env();
-  return env.RunScript("1 + 2 + 3");
+  return MaybeToChecked(env.RunScript("1 + 2 + 3"));
 }
 
 Value RunStdString(const CallbackInfo& info) {
   Env env = info.Env();
   std::string str = "1 + 2 + 3";
-  return env.RunScript(str);
+  return MaybeToChecked(env.RunScript(str));
 }
 
 Value RunJsString(const CallbackInfo& info) {
   Env env = info.Env();
-  return env.RunScript(info[0].As<String>());
+  return MaybeToChecked(env.RunScript(info[0].As<String>()));
 }
 
 Value RunWithContext(const CallbackInfo& info) {
@@ -27,18 +28,18 @@ Value RunWithContext(const CallbackInfo& info) {
   std::string code = "(";
   for (unsigned int i = 0; i < keys.Length(); i++) {
     if (i != 0) code += ",";
-    code += keys.Get(i).As<String>().Utf8Value();
+    code += MaybeToChecked(keys.Get(i)).As<String>().Utf8Value();
   }
   code += ") => " + info[0].As<String>().Utf8Value();
 
-  Value ret = env.RunScript(code);
+  Value ret = MaybeToChecked(env.RunScript(code));
   Function fn = ret.As<Function>();
   std::vector<napi_value> args;
   for (unsigned int i = 0; i < keys.Length(); i++) {
-    Value key = keys.Get(i);
-    args.push_back(info[1].As<Object>().Get(key));
+    Value key = MaybeToChecked(keys.Get(i));
+    args.push_back(MaybeToChecked(info[1].As<Object>().Get(key)));
   }
-  return fn.Call(args);
+  return FromMaybe(fn.Call(args));
 }
 
 } // end anonymous namespace

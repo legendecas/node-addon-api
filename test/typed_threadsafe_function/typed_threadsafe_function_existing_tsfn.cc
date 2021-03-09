@@ -1,5 +1,6 @@
 #include <cstdlib>
 #include "napi.h"
+#include "test_helper.h"
 
 #if (NAPI_VERSION > 3)
 
@@ -65,10 +66,11 @@ static Value TestCall(const CallbackInfo& info) {
   if (info.Length() > 0) {
     Object opts = info[0].As<Object>();
     if (opts.Has("blocking")) {
-      isBlocking = opts.Get("blocking").ToBoolean();
+      isBlocking =
+          MaybeToChecked(MaybeToChecked(opts.Get("blocking")).ToBoolean());
     }
     if (opts.Has("data")) {
-      hasData = opts.Get("data").ToBoolean();
+      hasData = MaybeToChecked(MaybeToChecked(opts.Get("data")).ToBoolean());
     }
   }
 

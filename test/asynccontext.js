@@ -1,5 +1,5 @@
 'use strict';
-const buildType = process.config.target_defaults.default_configuration;
+
 const assert = require('assert');
 const common = require('./common');
 
@@ -17,8 +17,7 @@ function checkAsyncHooks() {
   return false;
 }
 
-test(require(`./build/${buildType}/binding.node`));
-test(require(`./build/${buildType}/binding_noexcept.node`));
+module.exports = common.runTest(test);
 
 function installAsyncHooksForTest() {
   return new Promise((resolve, reject) => {
