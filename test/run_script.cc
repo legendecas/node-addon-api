@@ -7,18 +7,18 @@ namespace {
 
 Value RunPlainString(const CallbackInfo& info) {
   Env env = info.Env();
-  return MaybeToChecked(env.RunScript("1 + 2 + 3"));
+  return FromMaybe(env.RunScript("1 + 2 + 3"));
 }
 
 Value RunStdString(const CallbackInfo& info) {
   Env env = info.Env();
   std::string str = "1 + 2 + 3";
-  return MaybeToChecked(env.RunScript(str));
+  return FromMaybe(env.RunScript(str));
 }
 
 Value RunJsString(const CallbackInfo& info) {
   Env env = info.Env();
-  return MaybeToChecked(env.RunScript(info[0].As<String>()));
+  return FromMaybe(env.RunScript(info[0].As<String>()));
 }
 
 Value RunWithContext(const CallbackInfo& info) {

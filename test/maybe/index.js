@@ -6,7 +6,7 @@ const os = require('os');
 
 const napiChild = require('../napi_child');
 
-module.exports = test(require(`../build/${buildType}/binding_noexcept_maybe.node`));
+module.exports = test(require(`../build/${buildType}/binding_noexcept_maybe.node`).maybe_check);
 
 function test(binding) {
   if (process.argv.includes('child')) {

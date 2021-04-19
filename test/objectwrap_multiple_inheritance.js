@@ -10,4 +10,4 @@ const test = bindingName => {
   assert.strictEqual(testmi.test, 0);
 }
 
-module.exports = require('./common').runTest(test);
+module.exports = require('./common').runTestWithBindingPath(test);

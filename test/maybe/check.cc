@@ -1,4 +1,5 @@
 #include "napi.h"
+#if defined(NODE_ADDON_API_ENABLE_MAYBE)
 
 using namespace Napi;
 
@@ -14,9 +15,9 @@ void VoidCallback(const CallbackInfo& info) {
 
 }  // end anonymous namespace
 
-Object Init(Env env, Object exports) {
+Object InitMaybeCheck(Env env) {
+  Object exports = Object::New(env);
   exports.Set("voidCallback", Function::New(env, VoidCallback));
   return exports;
 }
-
-NODE_API_MODULE(addon, Init)
+#endif

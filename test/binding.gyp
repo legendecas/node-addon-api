@@ -26,6 +26,7 @@
         'external.cc',
         'function.cc',
         'handlescope.cc',
+        'maybe/check.cc',
         'movable_callbacks.cc',
         'memory_management.cc',
         'name.cc',
