@@ -1,0 +1,16 @@
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "pull-request-title-pattern": "chore: release v${version}",
+  "extra-files": [
+    "README.md"
+  ],
+  "changelog-path": "CHANGELOG.md",
+  "changelog-type": "github",
+  "bump-minor-pre-major": false,
+  "bump-patch-for-minor-pre-major": false,
+  "draft": false,
+  "prerelease": false,
+  "packages": {
+    ".": {}
+  }
+}
