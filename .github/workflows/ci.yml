@@ -2,6 +2,10 @@ name: Node.js CI Unix Platform
 
 on: [push, pull_request]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
 env:
   PYTHON_VERSION: '3.11'
 
@@ -71,5 +75,5 @@ jobs:
         $CXX --version
         export CFLAGS="$CFLAGS -O3 --coverage" LDFLAGS="$LDFLAGS --coverage"
         echo "CFLAGS=\"$CFLAGS\" LDFLAGS=\"$LDFLAGS\""
-        npm run pretest -- --verbose
+        npm run pretest -- --verbose --asan=1
         node test
